@@ -22,9 +22,7 @@ public class TicketController {
 	@Autowired
 	private TicketService service;
 	@Autowired
-	private TicketMapperService mapperService;
-
-//	private TicketMapperRepository ticketrepo;
+	private TicketMapperService mapperService;	
 
 	@PostMapping("/cust/bookticket")
 	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
@@ -33,7 +31,8 @@ public class TicketController {
 
 	@GetMapping("/cust/showbookedticket/{id}")
 	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
-
+		
+		
 		service.showBookedTicket(id);
 
 		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);

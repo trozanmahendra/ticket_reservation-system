@@ -25,6 +25,8 @@ public class TicketServiceImpl implements TicketService {
 //	public BookedTicket bookedTicketBean() {
 //	return new BookedTicket();
 //	}
+	
+	TicketMapper mapper = new TicketMapper();
 
 	private TicketRepository ticketRepo;
 	private BookedTicket bookedTicket;
@@ -50,10 +52,10 @@ public class TicketServiceImpl implements TicketService {
 		return ticketRepo.save(ticket);
 	}
 
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public BookedTicket showBookedTicket(String id) {
-		TicketMapper mapper = new TicketMapper();
+		
 
 		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
 		Ticket ticket = bookedTicket.getTicket();
@@ -71,7 +73,7 @@ public class TicketServiceImpl implements TicketService {
 		Passenger passenger = bookedTicket.getPassenger();
 
 		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
-
+		ticketMapperRepository.deleteAll();
 		BeanUtils.copyProperties(bus, mapper);
 		BeanUtils.copyProperties(ticket, mapper);
 		BeanUtils.copyProperties(passenger, mapper);
