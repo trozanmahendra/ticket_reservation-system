@@ -1,8 +1,9 @@
 package com.mgWork.service;
 
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import com.mgWork.beans.BookedTicket;
@@ -19,12 +20,12 @@ import com.mgWork.repository.TicketRepository;
 
 @Service
 public class TicketServiceImpl implements TicketService {
-	
+
 //	@Bean
 //	public BookedTicket bookedTicketBean() {
 //	return new BookedTicket();
 //	}
-	
+
 	private TicketRepository ticketRepo;
 	private BookedTicket bookedTicket;
 	private BusRepository busRepository;
@@ -49,39 +50,75 @@ public class TicketServiceImpl implements TicketService {
 		return ticketRepo.save(ticket);
 	}
 
-	
-
+	@SuppressWarnings("deprecation")
 	@Override
-	public BookedTicket showBookedTicket(Long id) {
+	public BookedTicket showBookedTicket(String id) {
 		TicketMapper mapper = new TicketMapper();
-		
-		bookedTicket.setTicket(ticketRepo.findById(id).get());
+
+		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
 		Ticket ticket = bookedTicket.getTicket();
-		
+//System.out.println(ticket.getBus_id());
 		Long bid = ticket.getBus_id();
 		bookedTicket.setBus(busRepository.findById(bid).get());
-		Bus bus=bookedTicket.getBus();
-		
+		Bus bus = bookedTicket.getBus();
+//System.out.println(ticket.getCustomer_id()+"====================================");
 		Long cid = ticket.getCustomer_id();
 		bookedTicket.setCustomer(customerRepository.findById(cid).get());
 		Customer cust = bookedTicket.getCustomer();
-		
+//System.out.println(ticket.getPassenger_id()+"====================================");
 		Long pid = ticket.getPassenger_id();
 		bookedTicket.setPassenger(passengerRepository.findById(pid).get());
 		Passenger passenger = bookedTicket.getPassenger();
-		
-		System.out.println("\n\n"+bus+"\n"
-								+ticket
-					+"\n"+passenger+"\n"+cust);
-		
+
+		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
+
 		BeanUtils.copyProperties(bus, mapper);
 		BeanUtils.copyProperties(ticket, mapper);
 		BeanUtils.copyProperties(passenger, mapper);
 		BeanUtils.copyProperties(cust, mapper);
 		ticketMapperRepository.save(mapper);
-	
+
 		return bookedTicket;
+
+	}
+
+	@Override
+	public List<Ticket> showTickets() {
 		
+		return ticketRepo.findAll();
+	}
+	
+	@Override
+	public Ticket getTicket(String id) {
+		
+		return ticketRepo.findByTktId(id).get();
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

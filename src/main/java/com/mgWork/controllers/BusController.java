@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.entitys.Bus;
-import com.mgWork.repository.BusRepository;
 import com.mgWork.service.BusService;
 
 @RestController

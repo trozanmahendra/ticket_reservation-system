@@ -15,7 +15,7 @@ public class PassengerController {
 
 	@Autowired
 	private PassengerService passengerService;
-	@PostMapping("/admin/addpassenger")
+	@PostMapping("/cust/addpassenger")
 	public ResponseEntity<Passenger> savePassenger(@RequestBody Passenger passenger) {
 		return new ResponseEntity<Passenger>(passengerService.savePassenger(passenger),HttpStatus.CREATED);
 		

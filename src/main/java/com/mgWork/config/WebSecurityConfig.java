@@ -13,8 +13,8 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.mgWork.beans.BookedTicket;
+import com.mgWork.beans.StringPrefixedSequenceIdGenerator;
 import com.mgWork.entitys.Ticket;
-import com.mgWork.repository.BookedTicketRepository;
 
 @SuppressWarnings("deprecation")
 @Configuration
@@ -77,7 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public Ticket ticket() {
 		return new Ticket();
 	}
-	
+	@Bean
+	public StringPrefixedSequenceIdGenerator stringPrefixedSequenceIdGenerator() {
+		return new StringPrefixedSequenceIdGenerator();
+	} 
 
 }
 

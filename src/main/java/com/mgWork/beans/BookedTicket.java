@@ -1,13 +1,6 @@
 package com.mgWork.beans;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.Future;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
@@ -16,7 +9,6 @@ import com.mgWork.entitys.Ticket;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data

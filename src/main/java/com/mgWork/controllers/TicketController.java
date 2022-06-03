@@ -9,14 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mgWork.beans.BookedTicket;
 import com.mgWork.beans.TicketMapper;
 import com.mgWork.entitys.Ticket;
-import com.mgWork.repository.TicketMapperRepository;
-import com.mgWork.repository.TicketRepository;
 import com.mgWork.service.TicketMapperService;
 import com.mgWork.service.TicketService;
 
@@ -27,22 +23,52 @@ public class TicketController {
 	private TicketService service;
 	@Autowired
 	private TicketMapperService mapperService;
-	
-	private TicketMapperRepository ticketrepo;
-	
-	
+
+//	private TicketMapperRepository ticketrepo;
+
 	@PostMapping("/cust/bookticket")
-	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket){
-		return new ResponseEntity<Ticket>(service.saveTicket(ticket),HttpStatus.CREATED);
+	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
+		return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/cust/showbookedticket/{id}")
-	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable Long id){
-		
-	
+	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
+
 		service.showBookedTicket(id);
 
 		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
 	}
-	
+	@GetMapping("/cust/showtickets")
+	public ResponseEntity<List<Ticket>> showTickets(){
+		return new ResponseEntity<List<Ticket>>(service.showTickets(),HttpStatus.OK);
+		
+	}
+	@GetMapping("/cust/getticket/{id}")
+	public ResponseEntity<Ticket> getTicket(@PathVariable String id){
+		return new ResponseEntity<Ticket>(service.getTicket(id),HttpStatus.OK);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
