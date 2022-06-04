@@ -56,7 +56,11 @@ public class TicketServiceImpl implements TicketService {
 
 		ticket.setCustomerId(customer.getId());
 
-		return ticketRepo.save(ticket);
+		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
+		if (passenger != null)
+			return ticketRepo.save(ticket);
+		else
+			throw new RuntimeException("Passenger details are not valid");
 	}
 
 	@Override
@@ -77,7 +81,7 @@ public class TicketServiceImpl implements TicketService {
 		bookedTicket.setPassenger(passengerRepository.findById(pid).get());
 		Passenger passenger = bookedTicket.getPassenger();
 
-		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
+//		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
 		ticketMapperRepository.deleteAll();
 		BeanUtils.copyProperties(bus, mapper);
 		BeanUtils.copyProperties(ticket, mapper);

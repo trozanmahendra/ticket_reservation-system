@@ -26,6 +26,8 @@ public class Passenger implements Serializable {
 	private String psngr_name;
 	@Column(nullable = false)
 	private int psngr_age;
+	@Column(nullable = false,unique = true)
+	private Long customerId;
 	@Override
 	public String toString() {
 		return "Passenger [psngr_name=" + psngr_name + ", psngr_age=" + psngr_age + "]";

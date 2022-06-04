@@ -11,4 +11,6 @@ public interface BusService {
 	Bus saveBus(Bus bus);
 	
 	List<Bus> busList(Bus bus,Pageable pageable);
+	
+	List<Bus> searchBusesByOriginAndDestination(String origin,String Destination,Pageable pageable);
 }

@@ -22,52 +22,32 @@ public class TicketController {
 	@Autowired
 	private TicketService service;
 	@Autowired
-	private TicketMapperService mapperService;	
+	private TicketMapperService mapperService;
+//	@Autowired
+	
 
 	@PostMapping("/cust/bookticket")
 	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
-		return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
+			return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/cust/showbookedticket/{id}")
 	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
-		
-		
+
 		service.showBookedTicket(id);
 
 		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
 	}
+
 	@GetMapping("/cust/showtickets")
-	public ResponseEntity<List<Ticket>> showTickets(){
-		return new ResponseEntity<List<Ticket>>(service.showTickets(),HttpStatus.OK);
-		
+	public ResponseEntity<List<Ticket>> showTickets() {
+		return new ResponseEntity<List<Ticket>>(service.showTickets(), HttpStatus.OK);
+
 	}
+
 	@GetMapping("/cust/getticket/{id}")
-	public ResponseEntity<Ticket> getTicket(@PathVariable String id){
-		return new ResponseEntity<Ticket>(service.getTicket(id),HttpStatus.OK);
+	public ResponseEntity<Ticket> getTicket(@PathVariable String id) {
+		return new ResponseEntity<Ticket>(service.getTicket(id), HttpStatus.OK);
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

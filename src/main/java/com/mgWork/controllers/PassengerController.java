@@ -1,8 +1,12 @@
 package com.mgWork.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +22,11 @@ public class PassengerController {
 	@PostMapping("/cust/addpassenger")
 	public ResponseEntity<Passenger> savePassenger(@RequestBody Passenger passenger) {
 		return new ResponseEntity<Passenger>(passengerService.savePassenger(passenger),HttpStatus.CREATED);
+		
+	}
+	@GetMapping("/cust/passengerlist")
+	List<Passenger> passengerListOfCustomer(Pageable pageable){
+		return passengerService.passengerListOfCustomer(pageable);
 		
 	}
 }

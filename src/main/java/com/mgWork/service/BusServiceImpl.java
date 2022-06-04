@@ -28,4 +28,11 @@ public class BusServiceImpl implements BusService {
 		return busRepo.findAll();
 	}
 
+	@Override
+	public List<Bus> searchBusesByOriginAndDestination(String origin, String destination, Pageable pageable) {
+		
+		String org = origin,des = destination;
+		System.out.println(org + "++++++++++++++++++++++++++" + des+org);
+		return busRepo.findByOriginAndDestination(origin, destination, pageable);
+	}
 }
