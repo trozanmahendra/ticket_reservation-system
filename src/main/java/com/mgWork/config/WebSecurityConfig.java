@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/admin/*","/register","/login","/cust/*").permitAll()
+			.antMatchers("/admin/*","/register","/login").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.httpBasic();
@@ -38,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.inMemoryAuthentication()
 			.withUser("mg").password("12345").authorities("admin")
 			.and()
-			.withUser("mahendra").password("12345").authorities("user")
+			.withUser("bg").password("12345").authorities("user")
+			.and()
+			.withUser("raju").password("12345").authorities("user")
 			.and()
 			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 		

@@ -44,7 +44,7 @@ public class Ticket implements Serializable {
 
 	private Long passenger_id;
 
-	private Long customer_id;
+	private Long customerId;
 
 	private Long bus_id;
 

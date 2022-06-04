@@ -25,7 +25,7 @@ public class TicketServiceImpl implements TicketService {
 //	public BookedTicket bookedTicketBean() {
 //	return new BookedTicket();
 //	}
-	
+
 	TicketMapper mapper = new TicketMapper();
 
 	private TicketRepository ticketRepo;
@@ -34,6 +34,8 @@ public class TicketServiceImpl implements TicketService {
 	private TicketMapperRepository ticketMapperRepository;
 	private CustomerRepository customerRepository;
 	private PassengerRepository passengerRepository;
+	@Autowired
+	private CustomerService customerService;
 
 	@Autowired
 	public TicketServiceImpl(TicketRepository ticketRepo, BookedTicket bookedTicket, BusRepository busRepository,
@@ -49,13 +51,16 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket saveTicket(Ticket ticket) {
+
+		Customer customer = customerService.getLoggedInCustomer();
+
+		ticket.setCustomerId(customer.getId());
+
 		return ticketRepo.save(ticket);
 	}
 
-
 	@Override
 	public BookedTicket showBookedTicket(String id) {
-		
 
 		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
 		Ticket ticket = bookedTicket.getTicket();
@@ -64,7 +69,7 @@ public class TicketServiceImpl implements TicketService {
 		bookedTicket.setBus(busRepository.findById(bid).get());
 		Bus bus = bookedTicket.getBus();
 //System.out.println(ticket.getCustomer_id()+"====================================");
-		Long cid = ticket.getCustomer_id();
+		Long cid = ticket.getCustomerId();
 		bookedTicket.setCustomer(customerRepository.findById(cid).get());
 		Customer cust = bookedTicket.getCustomer();
 //System.out.println(ticket.getPassenger_id()+"====================================");
@@ -86,41 +91,14 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public List<Ticket> showTickets() {
-		
-		return ticketRepo.findAll();
+		Customer customer = customerService.getLoggedInCustomer();
+		return ticketRepo.findByCustomerId(customer.getId());
 	}
-	
+
 	@Override
 	public Ticket getTicket(String id) {
-		
+
 		return ticketRepo.findByTktId(id).get();
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

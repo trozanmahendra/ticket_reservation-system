@@ -30,6 +30,7 @@ public class Customer implements Serializable{
 	private String name;
 	@Column(nullable = false,unique = true)
 	private String email;
+	
 	@Column(nullable = false)
 	@Size(min = 4,message = "Password must be 4 char long")
 	private String password;
