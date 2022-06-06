@@ -42,6 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.withUser("raju").password("12345").authorities("user")
 			.and()
+			.withUser("bhanu").password("12345").authorities("user")
+			.and()
+			.withUser("parvesh").password("12345").authorities("user")
+			.and()
 			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 		
 //		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
