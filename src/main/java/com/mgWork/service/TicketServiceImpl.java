@@ -40,10 +40,7 @@ public class TicketServiceImpl implements TicketService {
 	private PassengerRepository passengerRepository;
 	@Autowired
 	private CustomerService customerService;
-	
-	
-	
-	
+
 	@Autowired
 	LocationRepository locationRepository;
 	@Autowired
@@ -67,26 +64,33 @@ public class TicketServiceImpl implements TicketService {
 		Customer customer = customerService.getLoggedInCustomer();
 
 		ticket.setCustomerId(customer.getId());
-		
+
+//		if (busRepository.findById(ticket.getBus_id()) == null)
+//			throw new RuntimeException("No bus Avaialbe with this bus_id : " + ticket.getBus_id());
+//		
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
+
 		String origin = bus.getOrigin();
 		String pickUp = ticket.getPickUp();
 		String Destination = bus.getDestination();
 		String drop = ticket.getDropp();
-		System.out.println(origin+"--------------"+pickUp+"---------"+Destination+"--------"+drop);
-		
+		System.out.println(origin + "--------------" + pickUp + "---------" + Destination + "--------" + drop);
+
 		Location loc1 = locationRepository.findByLocation(origin);
-		
+
 		SubLocation loc2 = subLocationRepository.findBySubLoc(pickUp);
 		Location loc3 = locationRepository.findByLocation(Destination);
 		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
 
-
 		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
-		if (passenger != null && loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
-			return ticketRepo.save(ticket);
-		else
-			throw new RuntimeException("Passenger details are not valid or pickUp or drop point errors");
+		if (passenger != null) {
+			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
+				return ticketRepo.save(ticket);
+			else
+				throw new RuntimeException(" pickUp or drop point errors");
+		} else {
+			throw new RuntimeException("Passenger details are not valid ");
+		}
 	}
 
 	@Override
@@ -115,7 +119,11 @@ public class TicketServiceImpl implements TicketService {
 		BeanUtils.copyProperties(cust, mapper);
 		ticketMapperRepository.save(mapper);
 
-		return bookedTicket;
+		Customer customer = customerService.getLoggedInCustomer();
+		if (customer.getId() == cust.getId())
+			return bookedTicket;
+		else
+			throw new RuntimeException("Invalid Ticket id " + cust.getId());
 
 	}
 
