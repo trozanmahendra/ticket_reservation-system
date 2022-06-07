@@ -43,9 +43,9 @@ public class TicketMapper {
 	private String bus_type ;
 	private int seats ;
 	private String origin ;
-	private String pickup_point ;
+	private String pickUp ;
 	private String destination ;
-	private String drop_point ;
+	private String dropp ;
 	private float tkt_fare ;
 
 	private Date start_date ;

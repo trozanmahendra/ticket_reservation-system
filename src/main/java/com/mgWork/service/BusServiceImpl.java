@@ -7,8 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mgWork.entitys.Bus;
-import com.mgWork.entitys.Location;
-import com.mgWork.entitys.SubLocation;
 import com.mgWork.repository.BusRepository;
 import com.mgWork.repository.LocationRepository;
 import com.mgWork.repository.SubLocationRepository;
@@ -28,20 +26,20 @@ public class BusServiceImpl implements BusService {
 
 	@Override
 	public Bus saveBus(Bus bus) {
-		String origin = bus.getOrigin();
-		String pickUp = bus.getPickup_point();
-		String Destination = bus.getDestination();
-		String drop = bus.getDrop_point();
-		System.out.println(origin+"--------------"+pickUp+"---------"+Destination+"--------"+drop);
-		Location loc1 = locationRepository.findByLocation(origin);
-		SubLocation loc2 = subLocationRepository.findBySubLoc(pickUp);
-		Location loc3 = locationRepository.findByLocation(Destination);
-		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
-
-		if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
+//		String origin = bus.getOrigin();
+//		String pickUp = bus.getPickup_point();
+//		String Destination = bus.getDestination();
+//		String drop = bus.getDrop_point();
+//		System.out.println(origin+"--------------"+pickUp+"---------"+Destination+"--------"+drop);
+//		Location loc1 = locationRepository.findByLocation(origin);
+//		SubLocation loc2 = subLocationRepository.findBySubLoc(pickUp);
+//		Location loc3 = locationRepository.findByLocation(Destination);
+//		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
+//
+//		if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
 			return busRepo.save(bus);
-		else
-			throw new RuntimeException("pickUp or drop point errors");
+//		else
+//			throw new RuntimeException("pickUp or drop point errors");
 	}
 
 	@Override

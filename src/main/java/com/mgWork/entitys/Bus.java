@@ -38,9 +38,9 @@ public class Bus implements Serializable {
 	private String bus_type;
 	private int seats;
 	private String origin;
-	private String pickup_point;
+//	private String pickup_point;
 	private String destination;
-	private String drop_point;
+//	private String drop_point;
 	private float tkt_fare;
 
 	@Future
@@ -57,8 +57,8 @@ public class Bus implements Serializable {
 	@Override
 	public String toString() {
 		return "Bus [bus_name=" + bus_name + ", regId=" + regId + ", bus_type=" + bus_type + ", seats=" + seats
-				+ ", origin=" + origin + ", pickup_point=" + pickup_point + ", destination=" + destination
-				+ ", drop_point=" + drop_point + ", tkt_fare=" + tkt_fare + ", start_date=" + start_date + ", end_date="
+				+ ", origin=" + origin + ", pickup_point=" + ", destination=" + destination
+				+ ", drop_point="  + ", tkt_fare=" + tkt_fare + ", start_date=" + start_date + ", end_date="
 				+ end_date + "]";
 	}
 

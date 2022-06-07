@@ -40,11 +40,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.withUser("bg").password("12345").authorities("user")
 			.and()
-			.withUser("raju").password("12345").authorities("user")
+			.withUser("mahendra").password("12345").authorities("user")
 			.and()
-			.withUser("bhanu").password("12345").authorities("user")
+			.withUser("Bharath").password("12345").authorities("user")
 			.and()
-			.withUser("parvesh").password("12345").authorities("user")
+			.withUser("Surr").password("12345").authorities("user")
 			.and()
 			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 		

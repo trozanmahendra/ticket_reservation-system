@@ -10,11 +10,15 @@ import com.mgWork.beans.BookedTicket;
 import com.mgWork.beans.TicketMapper;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
+import com.mgWork.entitys.Location;
 import com.mgWork.entitys.Passenger;
+import com.mgWork.entitys.SubLocation;
 import com.mgWork.entitys.Ticket;
 import com.mgWork.repository.BusRepository;
 import com.mgWork.repository.CustomerRepository;
+import com.mgWork.repository.LocationRepository;
 import com.mgWork.repository.PassengerRepository;
+import com.mgWork.repository.SubLocationRepository;
 import com.mgWork.repository.TicketMapperRepository;
 import com.mgWork.repository.TicketRepository;
 
@@ -36,6 +40,14 @@ public class TicketServiceImpl implements TicketService {
 	private PassengerRepository passengerRepository;
 	@Autowired
 	private CustomerService customerService;
+	
+	
+	
+	
+	@Autowired
+	LocationRepository locationRepository;
+	@Autowired
+	SubLocationRepository subLocationRepository;
 
 	@Autowired
 	public TicketServiceImpl(TicketRepository ticketRepo, BookedTicket bookedTicket, BusRepository busRepository,
@@ -55,12 +67,26 @@ public class TicketServiceImpl implements TicketService {
 		Customer customer = customerService.getLoggedInCustomer();
 
 		ticket.setCustomerId(customer.getId());
+		
+		Bus bus = busRepository.findById(ticket.getBus_id()).get();
+		String origin = bus.getOrigin();
+		String pickUp = ticket.getPickUp();
+		String Destination = bus.getDestination();
+		String drop = ticket.getDropp();
+		System.out.println(origin+"--------------"+pickUp+"---------"+Destination+"--------"+drop);
+		
+		Location loc1 = locationRepository.findByLocation(origin);
+		
+		SubLocation loc2 = subLocationRepository.findBySubLoc(pickUp);
+		Location loc3 = locationRepository.findByLocation(Destination);
+		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
+
 
 		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
-		if (passenger != null)
+		if (passenger != null && loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
 			return ticketRepo.save(ticket);
 		else
-			throw new RuntimeException("Passenger details are not valid");
+			throw new RuntimeException("Passenger details are not valid or pickUp or drop point errors");
 	}
 
 	@Override

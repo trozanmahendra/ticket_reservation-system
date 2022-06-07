@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Passenger implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -26,11 +26,11 @@ public class Passenger implements Serializable {
 	private String psngr_name;
 	@Column(nullable = false)
 	private int psngr_age;
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false)
 	private Long customerId;
 	@Override
 	public String toString() {
-		return "Passenger [psngr_name=" + psngr_name + ", psngr_age=" + psngr_age + "]";
+		return "Passenger [psngr_name=" + psngr_name + ", psngr_age=" + psngr_age +"]";
 	}
 
 }
