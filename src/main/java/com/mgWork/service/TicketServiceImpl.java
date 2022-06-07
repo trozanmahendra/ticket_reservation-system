@@ -123,7 +123,7 @@ public class TicketServiceImpl implements TicketService {
 		if (customer.getId() == cust.getId())
 			return bookedTicket;
 		else
-			throw new RuntimeException("Invalid Ticket id " + cust.getId());
+			throw new RuntimeException("Invalid Ticket id " + ticket.getTktId());
 
 	}
 
