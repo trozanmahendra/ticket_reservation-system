@@ -37,6 +37,8 @@ public class Bus implements Serializable {
 
 	private String bus_type;
 	private int seats;
+	
+	private int seatsAvailable;
 	private String origin;
 //	private String pickup_point;
 	private String destination;

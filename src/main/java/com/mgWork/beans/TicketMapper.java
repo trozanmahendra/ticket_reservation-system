@@ -42,6 +42,7 @@ public class TicketMapper {
 	private String regId ;
 	private String bus_type ;
 	private int seats ;
+	private int seatsAvailable ;
 	private String origin ;
 	private String pickUp ;
 	private String destination ;

@@ -84,9 +84,17 @@ public class TicketServiceImpl implements TicketService {
 
 		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
 		if (passenger != null) {
-			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
-				return ticketRepo.save(ticket);
-			else
+			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc()) {
+				int seatsAvail = bus.getSeatsAvailable();
+				if (seatsAvail > 0) {
+					bus.setSeatsAvailable(seatsAvail - 1);
+					Bus buss = busRepository.findById(bus.getBus_id()).get();
+					buss.setSeatsAvailable(seatsAvail-1);
+					busRepository.save(buss);
+					return ticketRepo.save(ticket);
+				}else
+					throw new RuntimeException(" No seats available");
+			} else
 				throw new RuntimeException(" pickUp or drop point errors");
 		} else {
 			throw new RuntimeException("Passenger details are not valid ");
