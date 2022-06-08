@@ -2,6 +2,7 @@ package com.mgWork.config;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,18 +16,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.mgWork.beans.BookedTicket;
 import com.mgWork.beans.StringPrefixedSequenceIdGenerator;
 import com.mgWork.entitys.Ticket;
+import com.mgWork.security.CustomUserDetailsService;
 
 @SuppressWarnings("deprecation")
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-//	@Autowired
-//	private CustomUserDetailsService userDetailsService;
+	@Autowired
+	private CustomUserDetailsService CustomerDetailsService;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/admin/*","/register","/login").permitAll()
+			.antMatchers("/admin/*","/cust/register","/cust/login").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.httpBasic();
@@ -34,19 +36,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-			.withUser("mg").password("12345").authorities("admin")
-			.and()
-			.withUser("bg").password("12345").authorities("user")
-			.and()
-			.withUser("mahendra").password("12345").authorities("user")
-			.and()
-			.withUser("Bharath").password("12345").authorities("user")
-			.and()
-			.withUser("Surr").password("12345").authorities("user")
-			.and()
-			.passwordEncoder(NoOpPasswordEncoder.getInstance());
+//		auth
+//			.inMemoryAuthentication()
+//			.withUser("mg").password("12345").authorities("admin")
+//			.and()
+//			.withUser("bg").password("12345").authorities("user")
+//			.and()
+//			.withUser("mahendra").password("12345").authorities("user")
+//			.and()
+//			.withUser("Bharath").password("12345").authorities("user")
+//			.and()
+//			.withUser("Surr").password("12345").authorities("user")
+//			.and()
+//			.passwordEncoder(NoOpPasswordEncoder.getInstance());
 		
 //		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
 //		
@@ -58,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		
 //		auth.userDetailsService(userDetailsManager);
 		
-//		auth.userDetailsService(userDetailsService);
+		auth.userDetailsService(CustomerDetailsService);
 	}
 	@Bean
 	public PasswordEncoder encoder() {

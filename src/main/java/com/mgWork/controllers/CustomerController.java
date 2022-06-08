@@ -20,12 +20,15 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 	
-	@PostMapping("/cust/addCustomer")
+	@PostMapping("/cust/register")
 	public ResponseEntity<Customer> saveCustomer(@RequestBody Customer  customer){
 		return new ResponseEntity<Customer>(customerService.saveCustomer(customer),HttpStatus.CREATED);
 		
 	}
 	
+//	public ResponseEntity<Customer> loginCustomer(Customer customer){
+//		return new ResponseEntity<Customer>(customerService.findByName())
+//	}
 	
 }
 
