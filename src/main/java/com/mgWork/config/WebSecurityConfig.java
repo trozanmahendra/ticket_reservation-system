@@ -10,11 +10,11 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.mgWork.beans.BookedTicket;
 import com.mgWork.beans.StringPrefixedSequenceIdGenerator;
+import com.mgWork.beans.TicketMapper;
 import com.mgWork.entitys.Ticket;
 import com.mgWork.security.CustomUserDetailsService;
 
@@ -22,13 +22,14 @@ import com.mgWork.security.CustomUserDetailsService;
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
-	private CustomUserDetailsService CustomerDetailsService;
+	private CustomUserDetailsService CustomerUserDetailsService;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/admin/*","/cust/register","/cust/login").permitAll()
+//			.mvcMatchers("/admin/**").hasAuthority("ADMIN")
+			.antMatchers("/admin/register","/admin/login","/","/cust/register","/cust/login").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.httpBasic();
@@ -36,31 +37,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth
-//			.inMemoryAuthentication()
-//			.withUser("mg").password("12345").authorities("admin")
-//			.and()
-//			.withUser("bg").password("12345").authorities("user")
-//			.and()
-//			.withUser("mahendra").password("12345").authorities("user")
-//			.and()
-//			.withUser("Bharath").password("12345").authorities("user")
-//			.and()
-//			.withUser("Surr").password("12345").authorities("user")
-//			.and()
-//			.passwordEncoder(NoOpPasswordEncoder.getInstance());
+/*
+		 * auth .inMemoryAuthentication()
+		 * .withUser("mg").password("12345").authorities("admin") .and()
+		 * .withUser("bg").password("12345").authorities("user") .and()
+		 * .withUser("mahendra").password("12345").authorities("user") .and()
+		 * .withUser("Bharath").password("12345").authorities("user") .and()
+		 * .withUser("Surr").password("12345").authorities("user") .and()
+		 * .passwordEncoder(NoOpPasswordEncoder.getInstance());
+		 * 
+		 * InMemoryUserDetailsManager userDetailsManager = new
+		 * InMemoryUserDetailsManager();
+		 * 
+		 * UserDetails user1 =
+		 * User.withUsername("mg").password("12345").authorities("admin").build();
+		 * UserDetails user2 =
+		 * User.withUsername("bg").password("12345").authorities("user").build();
+		 * 
+		 * userDetailsManager.createUser(user1); userDetailsManager.createUser(user2);
+		 * 
+		 * auth.userDetailsService(userDetailsManager);
+ */
 		
-//		InMemoryUserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-//		
-//		UserDetails user1 = User.withUsername("mg").password("12345").authorities("admin").build();
-//		UserDetails user2 = User.withUsername("bg").password("12345").authorities("user").build();
-//	
-//		userDetailsManager.createUser(user1);
-//		userDetailsManager.createUser(user2);
-//		
-//		auth.userDetailsService(userDetailsManager);
-		
-		auth.userDetailsService(CustomerDetailsService);
+		auth.userDetailsService(CustomerUserDetailsService);
 	}
 	@Bean
 	public PasswordEncoder encoder() {
@@ -89,6 +88,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public StringPrefixedSequenceIdGenerator stringPrefixedSequenceIdGenerator() {
 		return new StringPrefixedSequenceIdGenerator();
 	} 
+	@Bean
+	public TicketMapper mapper() {
+		return new TicketMapper();
+	}
 
 }
 

@@ -35,7 +35,7 @@ public class Ticket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tkt_seq")
 	@GenericGenerator(name = "tkt_seq", strategy = "com.mgWork.beans.StringPrefixedSequenceIdGenerator", parameters = {
 			@Parameter(value = "50", name = "StringPrefixedSequenceIdGenerator.INCREMENT_PARAM"),
-			@Parameter(value = "DXC_TKT_", name = "StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER"),
+			@Parameter(value = "DXC_TKT_Gen_", name = "StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER"),
 			@Parameter(value = "%05d", name = "StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER") })
 	@Column(unique = true, updatable = false)
 	private String tktId;

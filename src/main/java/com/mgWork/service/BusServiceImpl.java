@@ -13,6 +13,7 @@ import com.mgWork.repository.SubLocationRepository;
 
 @Service
 public class BusServiceImpl implements BusService {
+	@Autowired
 	BusRepository busRepo;
 	@Autowired
 	LocationRepository locationRepository;
@@ -20,26 +21,13 @@ public class BusServiceImpl implements BusService {
 	SubLocationRepository subLocationRepository;
 
 	@Autowired
-	public BusServiceImpl(BusRepository busRepo) {
-		this.busRepo = busRepo;
-	}
+	AdminService adminService;
 
 	@Override
 	public Bus saveBus(Bus bus) {
-//		String origin = bus.getOrigin();
-//		String pickUp = bus.getPickup_point();
-//		String Destination = bus.getDestination();
-//		String drop = bus.getDrop_point();
-//		System.out.println(origin+"--------------"+pickUp+"---------"+Destination+"--------"+drop);
-//		Location loc1 = locationRepository.findByLocation(origin);
-//		SubLocation loc2 = subLocationRepository.findBySubLoc(pickUp);
-//		Location loc3 = locationRepository.findByLocation(Destination);
-//		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
-//
-//		if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc())
-			return busRepo.save(bus);
-//		else
-//			throw new RuntimeException("pickUp or drop point errors");
+
+		return busRepo.save(bus);
+
 	}
 
 	@Override
@@ -51,8 +39,6 @@ public class BusServiceImpl implements BusService {
 	@Override
 	public List<Bus> searchBusesByOriginAndDestination(String origin, String destination, Pageable pageable) {
 
-		String org = origin, des = destination;
-		System.out.println(org + "++++++++++++++++++++++++++" + des + org);
 		return busRepo.findByOriginAndDestination(origin, destination, pageable);
 	}
 }

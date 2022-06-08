@@ -2,8 +2,6 @@ package com.mgWork.controllers;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,12 +18,9 @@ import com.mgWork.service.BusService;
 @RestController
 public class BusController {
 
-	private BusService busService;
 	@Autowired
-	public BusController(BusService busService) {
-		super();
-		this.busService = busService;
-	}
+	private BusService busService;
+	
 	
 	@PostMapping("/admin/addbus")
 	public ResponseEntity<Bus> saveBus(@RequestBody Bus bus){

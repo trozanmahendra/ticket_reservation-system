@@ -9,7 +9,7 @@ import com.mgWork.repository.LocationRepository;
 public class LocationServiceImpl implements LocationService {
 	@Autowired
 	private LocationRepository locationRepository;
-
+	
 	public Location addLocation(Location location) {
 		
 		return locationRepository.save(location);

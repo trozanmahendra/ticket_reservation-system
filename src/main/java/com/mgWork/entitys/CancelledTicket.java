@@ -7,35 +7,47 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
-public class Admin {
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+public class CancelledTicket {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@Column(nullable = false,unique = true)
-	private String name;
-	@Column(unique = true)
-	private String email = "default";
+	private long id;
+
+	@Column(unique = true, updatable = false)
+	private String tktId;
+
+	private Long passenger_id;
+
+	private Long customerId;
+
+	
+	private Long bus_id;
 	@Column(nullable = false)
-	@Size(min = 4,message = "Password must be 4 char long")
-	private String password; 
+	private String pickUp;
+
 	@Column(nullable = false)
-	private String adminCode;
+	private String dropp;
+
+	@JsonIgnore
 	@CreationTimestamp
-	@Column(nullable = false,updatable = false)
+	@Column(nullable = false, updatable = false)
 	private Date createdAt;
+	@JsonIgnore
 	@UpdateTimestamp
 	private Date UpdatedAt;
 }

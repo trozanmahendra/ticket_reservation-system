@@ -19,7 +19,7 @@ public class StringPrefixedSequenceIdGenerator extends SequenceStyleGenerator {
 	}
 	
 	public static final String VALUE_PREFIX_PARAMETER = "valuePrefix";
-    public static final String VALUE_PREFIX_DEFAULT = "DXC_TKT_";
+    public static final String VALUE_PREFIX_DEFAULT = "DXC_TKT_00";
     private String valuePrefix;
  
     public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";

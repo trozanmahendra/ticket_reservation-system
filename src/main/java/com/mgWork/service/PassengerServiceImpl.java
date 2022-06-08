@@ -18,7 +18,7 @@ public class PassengerServiceImpl implements PassengerService {
 
 	@Override
 	public Passenger savePassenger(Passenger passenger) {
-		System.out.println("_------------------------------"+passenger+"------------------");
+//		System.out.println("_------------------------------"+passenger+"------------------");
 		
 		Customer customer = customerService.getLoggedInCustomer();
 		

@@ -1,6 +1,5 @@
 package com.mgWork.entitys;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,8 +11,6 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 

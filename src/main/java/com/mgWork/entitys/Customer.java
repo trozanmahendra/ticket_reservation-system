@@ -21,32 +21,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Customer implements Serializable{
-		private static final long serialVersionUID = 1L;
+public class Customer implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false, unique = true)
 	private String name;
-	@Column(nullable = false,unique = true)
+	@Column(nullable = false, unique = true)
 	private String email;
-	
+
 	@Column(nullable = false)
-	@Size(min = 4,message = "Password must be 4 char long")
+	@Size(min = 4, message = "Password must be 4 char long")
 	private String password;
-	
+
 	private int age;
-	
+
 	@CreationTimestamp
-	@Column(nullable = false,updatable = false)
+	@Column(nullable = false, updatable = false)
 	private Date createdAt;
 	@UpdateTimestamp
 	private Date UpdatedAt;
+
 	@Override
 	public String toString() {
-		return "Customer [name=" + name + ", email=" + email  + ", age=" + age + "]";
+		return "Customer [name=" + name + ", email=" + email + ", age=" + age + "]";
 	}
-	
-	
 
 }

@@ -2,6 +2,8 @@ package com.mgWork.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,58 +25,44 @@ import com.mgWork.repository.TicketMapperRepository;
 import com.mgWork.repository.TicketRepository;
 
 @Service
+@Transactional
 public class TicketServiceImpl implements TicketService {
 
-//	@Bean
-//	public BookedTicket bookedTicketBean() {
-//	return new BookedTicket();
-//	}
+	@Autowired
+	private TicketMapper mapper;
 
-	TicketMapper mapper = new TicketMapper();
-
+	@Autowired
 	private TicketRepository ticketRepo;
+	@Autowired
 	private BookedTicket bookedTicket;
+	@Autowired
 	private BusRepository busRepository;
+	@Autowired
 	private TicketMapperRepository ticketMapperRepository;
+	@Autowired
 	private CustomerRepository customerRepository;
+	@Autowired
 	private PassengerRepository passengerRepository;
 	@Autowired
 	private CustomerService customerService;
 
 	@Autowired
-	LocationRepository locationRepository;
+	private LocationRepository locationRepository;
 	@Autowired
-	SubLocationRepository subLocationRepository;
-
-	@Autowired
-	public TicketServiceImpl(TicketRepository ticketRepo, BookedTicket bookedTicket, BusRepository busRepository,
-			TicketMapperRepository ticketMapperRepository, CustomerRepository customerRepository,
-			PassengerRepository passengerRepository) {
-		this.ticketRepo = ticketRepo;
-		this.bookedTicket = bookedTicket;
-		this.busRepository = busRepository;
-		this.ticketMapperRepository = ticketMapperRepository;
-		this.customerRepository = customerRepository;
-		this.passengerRepository = passengerRepository;
-	}
-
+	private SubLocationRepository subLocationRepository;
 	@Override
 	public Ticket saveTicket(Ticket ticket) {
 
 		Customer customer = customerService.getLoggedInCustomer();
 
-		ticket.setCustomerId(customer.getId());
-
-//		if (busRepository.findById(ticket.getBus_id()) == null)
-//			throw new RuntimeException("No bus Avaialbe with this bus_id : " + ticket.getBus_id());
-//		
+		ticket.setCustomerId(customer.getId());	
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
 
 		String origin = bus.getOrigin();
 		String pickUp = ticket.getPickUp();
 		String Destination = bus.getDestination();
 		String drop = ticket.getDropp();
-		System.out.println(origin + "--------------" + pickUp + "---------" + Destination + "--------" + drop);
+//		System.out.println(origin + "--------------" + pickUp + "---------" + Destination + "--------" + drop);
 
 		Location loc1 = locationRepository.findByLocation(origin);
 
@@ -87,7 +75,7 @@ public class TicketServiceImpl implements TicketService {
 			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc()) {
 				int seatsAvail = bus.getSeatsAvailable();
 				if (seatsAvail > 0) {
-					bus.setSeatsAvailable(seatsAvail - 1);
+//					bus.setSeatsAvailable(seatsAvail - 1);
 					Bus buss = busRepository.findById(bus.getBus_id()).get();
 					buss.setSeatsAvailable(seatsAvail-1);
 					busRepository.save(buss);
