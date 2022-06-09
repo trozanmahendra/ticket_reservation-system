@@ -111,7 +111,7 @@ public class TicketServiceImpl implements TicketService {
 		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 //		System.out.println("---------\n\n\n--------------" + diff + "---------------\n\n\n---------------");
-		if (diff < 11)
+		if (diff < 5)
 			throw new RuntimeException(
 					"Ticket can't be cancelled,cancellation time is up for this ticket : " + ticket.getTktId());
 		else
