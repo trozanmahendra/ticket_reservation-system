@@ -13,4 +13,8 @@ public interface BusService {
 	List<Bus> busList(Bus bus,Pageable pageable);
 	
 	List<Bus> searchBusesByOriginAndDestination(String origin,String Destination,Pageable pageable);
+
+	Bus Updatebus(Long bus_id, Bus bus);
+
+	void deleteBus(Long bus_id);
 }

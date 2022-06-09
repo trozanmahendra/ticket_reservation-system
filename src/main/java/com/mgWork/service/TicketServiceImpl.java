@@ -1,6 +1,9 @@
 package com.mgWork.service;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.transaction.Transactional;
 
@@ -50,12 +53,15 @@ public class TicketServiceImpl implements TicketService {
 	private LocationRepository locationRepository;
 	@Autowired
 	private SubLocationRepository subLocationRepository;
+	@Autowired
+	private Date date;
+
 	@Override
 	public Ticket saveTicket(Ticket ticket) {
 
 		Customer customer = customerService.getLoggedInCustomer();
 
-		ticket.setCustomerId(customer.getId());	
+		ticket.setCustomerId(customer.getId());
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
 
 		String origin = bus.getOrigin();
@@ -75,18 +81,41 @@ public class TicketServiceImpl implements TicketService {
 			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc()) {
 				int seatsAvail = bus.getSeatsAvailable();
 				if (seatsAvail > 0) {
-//					bus.setSeatsAvailable(seatsAvail - 1);
 					Bus buss = busRepository.findById(bus.getBus_id()).get();
-					buss.setSeatsAvailable(seatsAvail-1);
+					buss.setSeatsAvailable(seatsAvail - 1);
 					busRepository.save(buss);
+					ticket.setStatus("active");
 					return ticketRepo.save(ticket);
-				}else
+				} else
 					throw new RuntimeException(" No seats available");
 			} else
 				throw new RuntimeException(" pickUp or drop point errors");
 		} else {
 			throw new RuntimeException("Passenger details are not valid ");
 		}
+	}
+
+	@Override
+	public Ticket saveCancelledTicket(String tktId, Ticket ticket) throws ParseException {
+		ticket = ticketRepo.findByTktId(tktId).get();
+		ticket.setStatus("cancelled");
+		Bus bus = busRepository.findById(ticket.getBus_id()).get();
+		int seatsAvail = bus.getSeatsAvailable();
+		bus.setSeatsAvailable(seatsAvail + 1);
+		busRepository.save(bus);
+
+//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+		Date firstDate = bus.getStart_date();
+		Date secondDate = date;
+
+		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//		System.out.println("---------\n\n\n--------------" + diff + "---------------\n\n\n---------------");
+		if (diff < 11)
+			throw new RuntimeException(
+					"Ticket can't be cancelled,cancellation time is up for this ticket : " + ticket.getTktId());
+		else
+			return ticketRepo.save(ticket);
 	}
 
 	@Override
@@ -131,7 +160,6 @@ public class TicketServiceImpl implements TicketService {
 
 	@Override
 	public Ticket getTicket(String id) {
-
 		return ticketRepo.findByTktId(id).get();
 	}
 
