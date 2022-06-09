@@ -1,5 +1,6 @@
 package com.mgWork.service;
 
+import java.text.ParseException;
 import java.util.List;
 
 import com.mgWork.beans.BookedTicket;
@@ -14,6 +15,9 @@ public interface TicketService {
 	List<Ticket> showTickets();
 	
 	Ticket getTicket(String id);
+
+	Ticket saveCancelledTicket(String tktId, Ticket ticket) throws ParseException;
+	
 	
 }
 

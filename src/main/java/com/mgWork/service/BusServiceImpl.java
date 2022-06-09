@@ -41,4 +41,16 @@ public class BusServiceImpl implements BusService {
 
 		return busRepo.findByOriginAndDestination(origin, destination, pageable);
 	}
+	
+	@Override
+	public Bus Updatebus(Long bus_id,Bus bus) {
+		bus.setBus_id(bus_id);
+		return busRepo.save(bus);
+	}
+	
+	@Override
+	public void deleteBus(Long bus_id) {
+		busRepo.deleteById(bus_id);
+		
+	}
 }

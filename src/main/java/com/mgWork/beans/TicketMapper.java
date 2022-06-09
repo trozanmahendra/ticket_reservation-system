@@ -48,6 +48,8 @@ public class TicketMapper {
 	private String destination ;
 	private String dropp ;
 	private float tkt_fare ;
+	
+	private String status;
 
 	private Date start_date ;
 

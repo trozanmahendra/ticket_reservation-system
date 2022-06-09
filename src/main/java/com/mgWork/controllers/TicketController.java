@@ -1,5 +1,6 @@
 package com.mgWork.controllers;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.beans.TicketMapper;
@@ -30,6 +32,11 @@ public class TicketController {
 	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
 			return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
 	}
+	@GetMapping("/cust/cancelticket")
+	public ResponseEntity<Ticket> cancelTicket(@RequestParam String tktId,Ticket ticket) throws ParseException {
+		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId,ticket), HttpStatus.CREATED);
+}
+	
 
 	@GetMapping("/cust/showbookedticket/{id}")
 	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {

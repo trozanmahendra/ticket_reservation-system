@@ -52,6 +52,7 @@ public class Ticket implements Serializable {
 	@Column(nullable = false)
 	private String dropp;
 
+	private String status;
 	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
