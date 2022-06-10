@@ -11,8 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mgWork.beans.BookedTicket;
-import com.mgWork.beans.TicketMapper;
+import com.mgWork.dto.BookedTicket;
+import com.mgWork.dto.TicketMapper;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Location;

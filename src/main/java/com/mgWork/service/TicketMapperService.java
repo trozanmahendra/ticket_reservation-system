@@ -2,7 +2,7 @@ package com.mgWork.service;
 
 import java.util.List;
 
-import com.mgWork.beans.TicketMapper;
+import com.mgWork.dto.TicketMapper;
 
 public interface TicketMapperService {
 

@@ -1,4 +1,4 @@
-package com.mgWork.beans;
+package com.mgWork.generators;
 
 import java.io.Serializable;
 import java.util.Properties;

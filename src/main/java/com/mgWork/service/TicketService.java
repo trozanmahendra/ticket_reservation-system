@@ -3,7 +3,7 @@ package com.mgWork.service;
 import java.text.ParseException;
 import java.util.List;
 
-import com.mgWork.beans.BookedTicket;
+import com.mgWork.dto.BookedTicket;
 import com.mgWork.entitys.Ticket;
 
 public interface TicketService {

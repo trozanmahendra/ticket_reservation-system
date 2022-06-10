@@ -27,13 +27,9 @@ import lombok.NoArgsConstructor;
 public class Ticket implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private long id;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tkt_seq")
-	@GenericGenerator(name = "tkt_seq", strategy = "com.mgWork.beans.StringPrefixedSequenceIdGenerator", parameters = {
+	@GenericGenerator(name = "tkt_seq", strategy = "com.mgWork.generators.StringPrefixedSequenceIdGenerator", parameters = {
 			@Parameter(value = "50", name = "StringPrefixedSequenceIdGenerator.INCREMENT_PARAM"),
 			@Parameter(value = "DXC_TKT_Gen_", name = "StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER"),
 			@Parameter(value = "%05d", name = "StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER") })

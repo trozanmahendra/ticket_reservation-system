@@ -1,4 +1,4 @@
-package com.mgWork.beans;
+package com.mgWork.dto;
 
 import java.io.Serializable;
 

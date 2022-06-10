@@ -12,10 +12,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mgWork.beans.BookedTicket;
-import com.mgWork.beans.StringPrefixedSequenceIdGenerator;
-import com.mgWork.beans.TicketMapper;
+import com.mgWork.dto.BookedTicket;
+import com.mgWork.dto.TicketMapper;
 import com.mgWork.entitys.Ticket;
+import com.mgWork.generators.StringPrefixedSequenceIdGenerator;
 import com.mgWork.security.CustomUserDetailsService;
 
 @SuppressWarnings("deprecation")

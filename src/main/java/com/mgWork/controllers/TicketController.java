@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mgWork.beans.TicketMapper;
+import com.mgWork.dto.TicketMapper;
 import com.mgWork.entitys.Ticket;
 import com.mgWork.service.TicketMapperService;
 import com.mgWork.service.TicketService;
