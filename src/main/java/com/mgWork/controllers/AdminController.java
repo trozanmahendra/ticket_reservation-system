@@ -30,6 +30,7 @@ public class AdminController {
 	public ResponseEntity<String> loginAdmin(@RequestParam String name,@RequestParam String password){
 		
 		Admin admin=adminService.findAdminByNameAndpassword(name,password);
+		System.out.println(admin.getName()+"---------------------------------------------");
 		return new ResponseEntity<String>("Welcome "+admin.getName()+"\nlogin Successful......."
 				,HttpStatus.OK);
 		

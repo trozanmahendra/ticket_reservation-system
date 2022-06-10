@@ -77,7 +77,7 @@ public class TicketServiceImpl implements TicketService {
 
 		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
 		if (passenger != null) {
-			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc()) {
+			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc() && loc1 != loc3) {
 				int seatsAvail = bus.getSeatsAvailable();
 				if (seatsAvail > 0) {
 					Bus buss = busRepository.findById(bus.getBus_id()).get();
@@ -165,7 +165,7 @@ public class TicketServiceImpl implements TicketService {
 			boolean b1 = tickets.get(i).getStatus().equalsIgnoreCase("active");
 			Bus bus = busRepository.findById(tickets.get(i).getBus_id()).get();
 System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n\n\n\n------------------------------");
-			firstDate = bus.getStart_date();
+			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			if (diff <= 0 && b1)

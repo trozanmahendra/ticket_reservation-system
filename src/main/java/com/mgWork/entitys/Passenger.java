@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,8 @@ public class Passenger implements Serializable {
 	private int psngr_age;
 	@Column(nullable = false)
 	private Long customerId;
+	@Column(nullable = false)
+	private String mobileNumber;
 
 	@Override
 	public String toString() {
