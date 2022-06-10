@@ -48,7 +48,6 @@ public class TicketServiceImpl implements TicketService {
 	private PassengerRepository passengerRepository;
 	@Autowired
 	private CustomerService customerService;
-
 	@Autowired
 	private LocationRepository locationRepository;
 	@Autowired
@@ -155,6 +154,33 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public List<Ticket> showTickets() {
 		Customer customer = customerService.getLoggedInCustomer();
+
+		List<Ticket> tickets = ticketRepo.findByCustomerId(customer.getId());
+		Date firstDate = null;
+
+//		Date firstDate = bus.getStart_date();
+		Date secondDate = date;
+
+		for (int i = 0; i < tickets.size(); i++) {
+			boolean b1 = tickets.get(i).getStatus().equalsIgnoreCase("active");
+			Bus bus = busRepository.findById(tickets.get(i).getBus_id()).get();
+System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n\n\n\n------------------------------");
+			firstDate = bus.getStart_date();
+			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			if (diff <= 0 && b1)
+				tickets.get(i).setStatus("expired");
+		}
+
+//		boolean b1 = tickets.get(0).getStatus().equalsIgnoreCase("active");
+//		Bus bus = busRepository.findById(tickets.get(0).getBus_id()).get();
+//		
+//		firstDate = bus.getStart_date();
+//		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+//		long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//		if(diff <= 0 && b1)
+//		tickets.get(0).setStatus("expired");
+
 		return ticketRepo.findByCustomerId(customer.getId());
 	}
 
