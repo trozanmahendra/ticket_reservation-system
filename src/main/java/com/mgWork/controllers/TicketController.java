@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ import com.mgWork.service.TicketMapperService;
 import com.mgWork.service.TicketService;
 
 @RestController
+@RequestMapping("/cust")
 public class TicketController {
 
 	@Autowired
@@ -28,17 +30,17 @@ public class TicketController {
 //	@Autowired
 	
 
-	@PostMapping("/cust/bookticket")
+	@PostMapping("/bookticket")
 	public ResponseEntity<Ticket> saveTicket(@RequestBody Ticket ticket) {
 			return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
 	}
-	@GetMapping("/cust/cancelticket")
+	@GetMapping("/cancelticket")
 	public ResponseEntity<Ticket> cancelTicket(@RequestParam String tktId,Ticket ticket) throws ParseException {
 		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId,ticket), HttpStatus.CREATED);
 }
 	
 
-	@GetMapping("/cust/showbookedticket/{id}")
+	@GetMapping("/showbookedticket/{id}")
 	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
 
 		service.showBookedTicket(id);
@@ -46,13 +48,13 @@ public class TicketController {
 		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
 	}
 
-	@GetMapping("/cust/showtickets")
+	@GetMapping("/showtickets")
 	public ResponseEntity<List<Ticket>> showTickets() {
 		return new ResponseEntity<List<Ticket>>(service.showTickets(), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/cust/getticket/{id}")
+	@GetMapping("/getticket/{id}")
 	public ResponseEntity<Ticket> getTicket(@PathVariable String id) {
 		return new ResponseEntity<Ticket>(service.getTicket(id), HttpStatus.OK);
 	}
