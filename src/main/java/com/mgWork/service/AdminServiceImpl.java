@@ -6,9 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mgWork.entitys.Admin;
 import com.mgWork.entitys.Customer;
-import com.mgWork.repository.AdminRepository;
 import com.mgWork.repository.AuthorityRepository;
 import com.mgWork.repository.CustomerRepository;
 
@@ -33,11 +31,7 @@ public class AdminServiceImpl implements AdminService {
 		else
 			throw new RuntimeException("Invalid Admin code : " + admin.getAdminCode());
 	}
-//	@Override
-//	public Admin findAdminByNameAndpassword(String name, String password) {
-//		
-//		return adminRepository.findByNameAndPassword(name,password);
-//	}
+
 	@Override
 	public Customer getLoggedInAdmin() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

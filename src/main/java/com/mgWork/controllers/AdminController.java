@@ -32,18 +32,6 @@ public class AdminController {
 		return new ResponseEntity<Customer>(adminService.saveAdmin(admin), HttpStatus.CREATED);
 
 	}
-
-//	
-//	@GetMapping("/login")
-//	public ResponseEntity<String> loginAdmin(@RequestParam String name,@RequestParam String password){
-//		
-//		Customer admin=customerService.findAdminByNameAndpassword(name,password);
-//		System.out.println(admin.getName()+"---------------------------------------------");
-//		return new ResponseEntity<String>("Welcome "+admin.getName()+"\nlogin Successful......."
-//				,HttpStatus.OK);
-//		
-//	}
-//	
 	@PostMapping("/login")
 	public ResponseEntity<String> loginCustomer(@RequestBody AuthModel authModel) {
 
@@ -51,7 +39,10 @@ public class AdminController {
 				.authenticate(new UsernamePasswordAuthenticationToken(authModel.getName(), authModel.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		if (customerService.getLoggedInCustomer().getAdminCode().equalsIgnoreCase("dxc-bus-admin")) {
+//		if (customerService.getLoggedInCustomer().getAdminCode().equalsIgnoreCase("dxc-bus-admin")) {
+		
+//		boolean flag= customerService.getLoggedInCustomer().getAdminCode().equalsIgnoreCase("dxc-bus-admin");
+		if (customerService.getLoggedInCustomer().getAdminCode() != null ) {	
 			return new ResponseEntity<String>(
 					"Welcome admin : " + authModel.getName() + " \n login successful...........", HttpStatus.OK);
 		} else {
