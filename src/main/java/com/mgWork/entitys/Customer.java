@@ -41,6 +41,8 @@ public class Customer implements Serializable {
 
 	private int age;
 	
+	private String adminCode;
+	
 	private String customerMobileNumber;
 	
 	@CreationTimestamp

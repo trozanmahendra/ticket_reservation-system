@@ -1,12 +1,14 @@
 package com.mgWork.service;
 
-import com.mgWork.entitys.Admin;
+import com.mgWork.entitys.Customer;
 
 public interface AdminService {
 
-	Admin saveAdmin(Admin admin);
+//	Admin saveAdmin(Admin admin);
 
-	Admin findAdminByNameAndpassword(String name, String password);
+//	Admin findAdminByNameAndpassword(String name, String password);
 
-	public Admin getLoggedInAdmin();
+	public Customer getLoggedInAdmin();
+
+	Customer saveAdmin(Customer admin);
 }

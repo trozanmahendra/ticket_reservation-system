@@ -3,39 +3,60 @@ package com.mgWork.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mgWork.entitys.Admin;
+import com.mgWork.dto.AuthModel;
+import com.mgWork.entitys.Customer;
 import com.mgWork.service.AdminService;
+import com.mgWork.service.CustomerService;
 
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
-	private AdminService adminService;
 	@Autowired
-	public AdminController(AdminService adminService) {
-		this.adminService = adminService;
-	}
+	private CustomerService customerService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	@Autowired
+	private AdminService adminService;
+
 	@PostMapping("/register")
-	public ResponseEntity<Admin> registerAdmin(@RequestBody Admin admin){
-		return new ResponseEntity<Admin>(adminService.saveAdmin(admin),HttpStatus.CREATED);
-		
+	public ResponseEntity<Customer> registerAdmin(@RequestBody Customer admin) {
+		return new ResponseEntity<Customer>(adminService.saveAdmin(admin), HttpStatus.CREATED);
+
 	}
-	
-	@GetMapping("/login")
-	public ResponseEntity<String> loginAdmin(@RequestParam String name,@RequestParam String password){
-		
-		Admin admin=adminService.findAdminByNameAndpassword(name,password);
-		System.out.println(admin.getName()+"---------------------------------------------");
-		return new ResponseEntity<String>("Welcome "+admin.getName()+"\nlogin Successful......."
-				,HttpStatus.OK);
-		
+
+//	
+//	@GetMapping("/login")
+//	public ResponseEntity<String> loginAdmin(@RequestParam String name,@RequestParam String password){
+//		
+//		Customer admin=customerService.findAdminByNameAndpassword(name,password);
+//		System.out.println(admin.getName()+"---------------------------------------------");
+//		return new ResponseEntity<String>("Welcome "+admin.getName()+"\nlogin Successful......."
+//				,HttpStatus.OK);
+//		
+//	}
+//	
+	@PostMapping("/login")
+	public ResponseEntity<String> loginCustomer(@RequestBody AuthModel authModel) {
+
+		Authentication authentication = authenticationManager
+				.authenticate(new UsernamePasswordAuthenticationToken(authModel.getName(), authModel.getPassword()));
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		if (customerService.getLoggedInCustomer().getAdminCode().equalsIgnoreCase("dxc-bus-admin")) {
+			return new ResponseEntity<String>(
+					"Welcome admin : " + authModel.getName() + " \n login successful...........", HttpStatus.OK);
+		} else {
+			throw new RuntimeException("please register as admin or login as customer");
+		}
 	}
-	
+
 }
