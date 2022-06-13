@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mgWork.entitys.AuthModel;
+import com.mgWork.dto.AuthModel;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
 import com.mgWork.service.BusService;

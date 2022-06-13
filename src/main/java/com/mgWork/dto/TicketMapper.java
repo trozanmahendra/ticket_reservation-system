@@ -29,15 +29,14 @@ public class TicketMapper {
 	@Transient
 	@JsonIgnore
 	private Passenger passenger;
-//	@Id
-//	@JsonIgnore
-//	private Long id;
+
 	@Id
 	private String tktId ;
 
 	private String psngr_name ;
 	private int psngr_age ;
-
+	private String mobileNumber;
+	
 	private String bus_name ;
 	private String regId ;
 	private String bus_type ;

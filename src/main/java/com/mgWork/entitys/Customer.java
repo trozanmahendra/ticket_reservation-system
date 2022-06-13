@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,6 +32,7 @@ public class Customer implements Serializable {
 	@Column(nullable = false, unique = true)
 	private String name;
 	@Column(nullable = false, unique = true)
+	@Email(message = "must include @ ")
 	private String email;
 
 	@Column(nullable = false)
@@ -36,16 +40,23 @@ public class Customer implements Serializable {
 	private String password;
 
 	private int age;
-
+	
+	private String customerMobileNumber;
+	
 	@CreationTimestamp
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
 	@UpdateTimestamp
 	private Date UpdatedAt;
+	@OneToOne
+	@JoinColumn(name = "authority_id")
+	private Authority authority;
 
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", email=" + email + ", age=" + age + "]";
 	}
+
+
 
 }

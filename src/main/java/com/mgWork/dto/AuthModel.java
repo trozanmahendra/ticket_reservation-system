@@ -1,4 +1,4 @@
-package com.mgWork.entitys;
+package com.mgWork.dto;
 
 import lombok.Data;
 
