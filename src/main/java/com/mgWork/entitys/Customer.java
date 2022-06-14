@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,9 +31,11 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(nullable = false, unique = true)
+	@Pattern(regexp = "^((?=[A-Za-z0-9])(?![_\\-@]).)*$"
+	,message = "name should not contain any special symbols")
 	private String name;
 	@Column(nullable = false, unique = true)
-	@Email(message = "must include @ ")
+	@Email(message = "must include @ while writing mail Address")
 	private String email;
 
 	@Column(nullable = false)

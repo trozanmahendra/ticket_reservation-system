@@ -2,6 +2,8 @@ package com.mgWork.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,7 @@ public class CustomerController {
 	private BusService busService;
 
 	@PostMapping("/register")
-	public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) {
 		return new ResponseEntity<Customer>(customerService.saveCustomer(customer), HttpStatus.CREATED);
 
 	}

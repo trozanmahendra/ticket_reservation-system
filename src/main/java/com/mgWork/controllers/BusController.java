@@ -2,6 +2,8 @@ package com.mgWork.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,7 @@ public class BusController {
 	
 	
 	@PostMapping("/addbus")
-	public ResponseEntity<Bus> saveBus(@RequestBody Bus bus){
+	public ResponseEntity<Bus> saveBus(@Valid @RequestBody Bus bus){
 		return new ResponseEntity<Bus>(busService.saveBus(bus),HttpStatus.CREATED);
 	}
 	@GetMapping("/buses")
@@ -35,7 +37,7 @@ public class BusController {
 		return busService.busList(bus, pageable);
 	}
 	@PutMapping("/updatebus")
-	public ResponseEntity<Bus> updateBus(@RequestParam Long bus_id,@RequestBody Bus bus) {
+	public ResponseEntity<Bus> updateBus(@Valid @RequestParam Long bus_id,@RequestBody Bus bus) {
 		return new ResponseEntity<Bus>(busService.Updatebus(bus_id,bus),HttpStatus.ACCEPTED);
 	}
 	@DeleteMapping("/deletebus")

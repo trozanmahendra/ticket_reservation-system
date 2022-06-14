@@ -45,9 +45,9 @@ public class Bus implements Serializable {
 //	private String drop_point;
 	private float tkt_fare;
 
-	@Future
+	@Future(message = "start_date must be a future date only")
 	private Date start_date;
-	@Future
+	@Future(message = "end_date must be a future date only")
 	private Date end_date;
 
 	@CreationTimestamp
