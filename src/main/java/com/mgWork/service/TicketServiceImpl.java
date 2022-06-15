@@ -1,19 +1,15 @@
 package com.mgWork.service;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.transaction.Transactional;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mgWork.dto.BookedTicket;
-import com.mgWork.dto.TicketMapper;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Location;
@@ -25,7 +21,6 @@ import com.mgWork.repository.CustomerRepository;
 import com.mgWork.repository.LocationRepository;
 import com.mgWork.repository.PassengerRepository;
 import com.mgWork.repository.SubLocationRepository;
-import com.mgWork.repository.TicketMapperRepository;
 import com.mgWork.repository.TicketRepository;
 
 @Service
@@ -33,16 +28,9 @@ import com.mgWork.repository.TicketRepository;
 public class TicketServiceImpl implements TicketService {
 
 	@Autowired
-	private TicketMapper mapper;
-
-	@Autowired
 	private TicketRepository ticketRepo;
 	@Autowired
-	private BookedTicket bookedTicket;
-	@Autowired
 	private BusRepository busRepository;
-//	@Autowired
-//	private TicketMapperRepository ticketMapperRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
@@ -63,15 +51,14 @@ public class TicketServiceImpl implements TicketService {
 
 		ticket.setCustId(customer.getId());
 		ticket.setCustomer(customerRepository.findById(customer.getId()).get());
-		
+
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
 		ticket.setBus(bus);
-		
+
 		String origin = bus.getOrigin();
 		String pickUp = ticket.getPickUp();
 		String Destination = bus.getDestination();
 		String drop = ticket.getDropp();
-//		System.out.println(origin + "--------------" + pickUp + "---------" + Destination + "--------" + drop);
 
 		Location loc1 = locationRepository.findByLocation(origin);
 
@@ -80,30 +67,29 @@ public class TicketServiceImpl implements TicketService {
 		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
 
 		List<Passenger> pids = ticket.getPassengers();
-		Passenger passenger=null;
-		for(int i=0;i<pids.size();i++) {
-			passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassengers().get(i).getId());
-			
+		Passenger passenger = null;
+		for (int i = 0; i < pids.size(); i++) {
+			passenger = passengerRepository.findByCustomerIdAndId(customer.getId(),
+					ticket.getPassengers().get(i).getId());
+
 		}
-//		System.out.println("---------"+passenger+"---------");
-			if (passenger != null) {
-				if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc() && loc1 != loc3) {
-					int seatsAvail = bus.getSeatsAvailable()-pids.size();
-					if (seatsAvail >= 0) {
-						Bus buss = busRepository.findById(bus.getBus_id()).get();
-						buss.setSeatsAvailable(seatsAvail);
-						busRepository.save(buss);
-						ticket.setStatus("active");
-						return ticketRepo.save(ticket);
-					} else
-						throw new RuntimeException(" No seats available");
+		if (passenger != null) {
+			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc() && loc1 != loc3) {
+				int seatsAvail = bus.getSeatsAvailable() - pids.size();
+				if (seatsAvail >= 0) {
+					Bus buss = busRepository.findById(bus.getBus_id()).get();
+					buss.setSeatsAvailable(seatsAvail);
+					busRepository.save(buss);
+					ticket.setStatus("active");
+					return ticketRepo.save(ticket);
 				} else
-					throw new RuntimeException(" pickUp or drop point errors");
-			} else {
-				throw new RuntimeException("Passenger details are not valid ");
-			}
-		
-		
+					throw new RuntimeException(" No seats available");
+			} else
+				throw new RuntimeException(" pickUp or drop point errors");
+		} else {
+			throw new RuntimeException("Passenger details are not valid ");
+		}
+
 	}
 
 	@Override
@@ -115,53 +101,17 @@ public class TicketServiceImpl implements TicketService {
 		bus.setSeatsAvailable(seatsAvail + ticket.getPassengers().size());
 		busRepository.save(bus);
 
-//		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
 		Date firstDate = bus.getStart_date();
 		Date secondDate = date;
 
 		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//		System.out.println("---------\n\n\n--------------" + diff + "---------------\n\n\n---------------");
 		if (diff < 5)
 			throw new RuntimeException(
 					"Ticket can't be cancelled,cancellation time is up for this ticket : " + ticket.getTktId());
 		else
 			return ticketRepo.save(ticket);
 	}
-
-//	@Override
-//	public BookedTicket showBookedTicket(String id) {
-//
-//		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
-//		Ticket ticket = bookedTicket.getTicket();
-////System.out.println(ticket.getBus_id());
-//		Long bid = ticket.getBus_id();
-//		bookedTicket.setBus(busRepository.findById(bid).get());
-//		Bus bus = bookedTicket.getBus();
-////System.out.println(ticket.getCustomer_id()+"====================================");
-//		Long cid = ticket.getCustId();
-//		bookedTicket.setCustomer(customerRepository.findById(cid).get());
-//		Customer cust = bookedTicket.getCustomer();
-////System.out.println(ticket.getPassenger_id()+"====================================");
-//		//Long pid = ticket.getPassenger_id();
-//	//	bookedTicket.setPassenger(passengerRepository.findById(pid).get());
-//		Passenger passenger = bookedTicket.getPassenger();
-//
-////		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
-//		ticketMapperRepository.deleteAll();
-//		BeanUtils.copyProperties(bus, mapper);
-//		BeanUtils.copyProperties(ticket, mapper);
-//		BeanUtils.copyProperties(passenger, mapper);
-//		BeanUtils.copyProperties(cust, mapper);
-//		ticketMapperRepository.save(mapper);
-//
-//		Customer customer = customerService.getLoggedInCustomer();
-//		if (customer.getId() == cust.getId())
-//			return bookedTicket;
-//		else
-//			throw new RuntimeException("Invalid Ticket id " + ticket.getTktId());
-//
-//	}
 
 	@Override
 	public List<Ticket> showTickets() {
@@ -170,13 +120,11 @@ public class TicketServiceImpl implements TicketService {
 		List<Ticket> tickets = ticketRepo.findByCustomerId(customer.getId());
 		Date firstDate = null;
 
-//		Date firstDate = bus.getStart_date();
 		Date secondDate = date;
 
 		for (int i = 0; i < tickets.size(); i++) {
 			boolean b1 = tickets.get(i).getStatus().equalsIgnoreCase("active");
 			Bus bus = busRepository.findById(tickets.get(i).getBus_id()).get();
-//System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n\n\n\n------------------------------");
 			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -190,10 +138,10 @@ public class TicketServiceImpl implements TicketService {
 	@Override
 	public Ticket getTicket(String id) {
 		Customer customer = customerService.getLoggedInCustomer();
-		if(customer.getId() == ticketRepo.findByTktId(id).get().getCustId())
-		return ticketRepo.findByTktId(id).get();
+		if (customer.getId() == ticketRepo.findByTktId(id).get().getCustId())
+			return ticketRepo.findByTktId(id).get();
 		else
-			throw new RuntimeException("Invalid ticket :"+id);
+			throw new RuntimeException("Invalid ticket :" + id);
 	}
 
 }

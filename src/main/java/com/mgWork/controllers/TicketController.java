@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mgWork.dto.TicketMapper;
 import com.mgWork.entitys.Ticket;
-import com.mgWork.service.TicketMapperService;
 import com.mgWork.service.TicketService;
 
 @RestController
@@ -27,9 +25,7 @@ public class TicketController {
 
 	@Autowired
 	private TicketService service;
-	@Autowired
-	private TicketMapperService mapperService;
-//	@Autowired
+	
 
 	@PostMapping("/bookticket")
 	public ResponseEntity<String> saveTicket(@Valid @RequestBody Ticket ticket) {
@@ -41,14 +37,6 @@ public class TicketController {
 	public ResponseEntity<Ticket> cancelTicket(@RequestParam String tktId, Ticket ticket) throws ParseException {
 		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId, ticket), HttpStatus.CREATED);
 	}
-
-//	@GetMapping("/showbookedticket/{id}")
-//	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
-//
-//		service.showBookedTicket(id);
-//
-//		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
-//	}
 
 	@GetMapping("/showtickets")
 	public ResponseEntity<List<Ticket>> showTickets() {
