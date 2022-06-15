@@ -30,17 +30,17 @@ public class TicketController {
 	@Autowired
 	private TicketMapperService mapperService;
 //	@Autowired
-	
 
 	@PostMapping("/bookticket")
-	public ResponseEntity<Ticket> saveTicket(@Valid @RequestBody Ticket ticket) {
-			return new ResponseEntity<Ticket>(service.saveTicket(ticket), HttpStatus.CREATED);
+	public ResponseEntity<String> saveTicket(@Valid @RequestBody Ticket ticket) {
+		service.saveTicket(ticket);
+		return new ResponseEntity<String>("Ticket booking successful tktId : " + ticket.getTktId(), HttpStatus.CREATED);
 	}
+
 	@GetMapping("/cancelticket")
-	public ResponseEntity<Ticket> cancelTicket(@RequestParam String tktId,Ticket ticket) throws ParseException {
-		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId,ticket), HttpStatus.CREATED);
-}
-	
+	public ResponseEntity<Ticket> cancelTicket(@RequestParam String tktId, Ticket ticket) throws ParseException {
+		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId, ticket), HttpStatus.CREATED);
+	}
 
 	@GetMapping("/showbookedticket/{id}")
 	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {

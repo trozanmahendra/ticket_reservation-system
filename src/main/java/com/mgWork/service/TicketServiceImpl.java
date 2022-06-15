@@ -61,9 +61,12 @@ public class TicketServiceImpl implements TicketService {
 
 		Customer customer = customerService.getLoggedInCustomer();
 
-		ticket.setCustomerId(customer.getId());
+		ticket.setCustId(customer.getId());
+		ticket.setCustomer(customerRepository.findById(customer.getId()).get());
+		
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
-
+		ticket.setBus(bus);
+		
 		String origin = bus.getOrigin();
 		String pickUp = ticket.getPickUp();
 		String Destination = bus.getDestination();
@@ -109,7 +112,7 @@ public class TicketServiceImpl implements TicketService {
 		ticket.setStatus("cancelled");
 		Bus bus = busRepository.findById(ticket.getBus_id()).get();
 		int seatsAvail = bus.getSeatsAvailable();
-		bus.setSeatsAvailable(seatsAvail + 1);
+		bus.setSeatsAvailable(seatsAvail + ticket.getPassengers().size());
 		busRepository.save(bus);
 
 //		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
@@ -136,7 +139,7 @@ public class TicketServiceImpl implements TicketService {
 		bookedTicket.setBus(busRepository.findById(bid).get());
 		Bus bus = bookedTicket.getBus();
 //System.out.println(ticket.getCustomer_id()+"====================================");
-		Long cid = ticket.getCustomerId();
+		Long cid = ticket.getCustId();
 		bookedTicket.setCustomer(customerRepository.findById(cid).get());
 		Customer cust = bookedTicket.getCustomer();
 //System.out.println(ticket.getPassenger_id()+"====================================");
@@ -173,7 +176,7 @@ public class TicketServiceImpl implements TicketService {
 		for (int i = 0; i < tickets.size(); i++) {
 			boolean b1 = tickets.get(i).getStatus().equalsIgnoreCase("active");
 			Bus bus = busRepository.findById(tickets.get(i).getBus_id()).get();
-System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n\n\n\n------------------------------");
+//System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n\n\n\n------------------------------");
 			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
@@ -181,21 +184,16 @@ System.out.println("-----------------\n\n\n\n--------------"+i+"------------\n\n
 				tickets.get(i).setStatus("expired");
 		}
 
-//		boolean b1 = tickets.get(0).getStatus().equalsIgnoreCase("active");
-//		Bus bus = busRepository.findById(tickets.get(0).getBus_id()).get();
-//		
-//		firstDate = bus.getStart_date();
-//		long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-//		long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-//		if(diff <= 0 && b1)
-//		tickets.get(0).setStatus("expired");
-
 		return ticketRepo.findByCustomerId(customer.getId());
 	}
 
 	@Override
 	public Ticket getTicket(String id) {
+		Customer customer = customerService.getLoggedInCustomer();
+		if(customer.getId() == ticketRepo.findByTktId(id).get().getCustId())
 		return ticketRepo.findByTktId(id).get();
+		else
+			throw new RuntimeException("Invalid ticket :"+id);
 	}
 
 }

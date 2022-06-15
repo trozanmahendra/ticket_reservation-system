@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -46,10 +48,13 @@ public class Ticket implements Serializable {
 //	@JoinColumn(name = "psngr_ids")
 	private List<Passenger> passengers;
 
-	private Long customerId;
+	private Long custId;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Customer customer;
 
-	
 	private Long bus_id;
+	@OneToOne(fetch = FetchType.EAGER)
+	private Bus bus;
 	@Column(nullable = false)
 	private String pickUp;
 
@@ -64,12 +69,11 @@ public class Ticket implements Serializable {
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date UpdatedAt;
+
 	@Override
 	public String toString() {
-		return "Ticket [tktId=" + tktId + ", passenger_id=" +", bus_id=" + bus_id + ", pickUp=" + pickUp
-				+ ", dropp=" + dropp + "]";
+		return "Ticket [tktId=" + tktId + "" + ", passengers=" + passengers + ", pickUp=" + pickUp + ", dropp=" + dropp
+				+ ", status=" + status + "]";
 	}
-
-	
 
 }
