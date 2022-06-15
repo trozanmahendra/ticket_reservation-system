@@ -1,6 +1,7 @@
 package com.mgWork.service;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -75,23 +76,31 @@ public class TicketServiceImpl implements TicketService {
 		Location loc3 = locationRepository.findByLocation(Destination);
 		SubLocation loc4 = subLocationRepository.findBySubLoc(drop);
 
-		Passenger passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassenger_id());
-		if (passenger != null) {
-			if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc() && loc1 != loc3) {
-				int seatsAvail = bus.getSeatsAvailable();
-				if (seatsAvail > 0) {
-					Bus buss = busRepository.findById(bus.getBus_id()).get();
-					buss.setSeatsAvailable(seatsAvail - 1);
-					busRepository.save(buss);
-					ticket.setStatus("active");
-					return ticketRepo.save(ticket);
-				} else
-					throw new RuntimeException(" No seats available");
-			} else
-				throw new RuntimeException(" pickUp or drop point errors");
-		} else {
-			throw new RuntimeException("Passenger details are not valid ");
+		List<Passenger> pids = ticket.getPassengers();
+		Passenger passenger=null;
+		for(int i=0;i<pids.size();i++) {
+			passenger = passengerRepository.findByCustomerIdAndId(customer.getId(), ticket.getPassengers().get(i).getId());
+			
 		}
+//		System.out.println("---------"+passenger+"---------");
+			if (passenger != null) {
+				if (loc1 == loc2.getLoc() && loc3 == loc4.getLoc() && loc1 != loc3) {
+					int seatsAvail = bus.getSeatsAvailable()-pids.size();
+					if (seatsAvail >= 0) {
+						Bus buss = busRepository.findById(bus.getBus_id()).get();
+						buss.setSeatsAvailable(seatsAvail);
+						busRepository.save(buss);
+						ticket.setStatus("active");
+						return ticketRepo.save(ticket);
+					} else
+						throw new RuntimeException(" No seats available");
+				} else
+					throw new RuntimeException(" pickUp or drop point errors");
+			} else {
+				throw new RuntimeException("Passenger details are not valid ");
+			}
+		
+		
 	}
 
 	@Override
@@ -131,8 +140,8 @@ public class TicketServiceImpl implements TicketService {
 		bookedTicket.setCustomer(customerRepository.findById(cid).get());
 		Customer cust = bookedTicket.getCustomer();
 //System.out.println(ticket.getPassenger_id()+"====================================");
-		Long pid = ticket.getPassenger_id();
-		bookedTicket.setPassenger(passengerRepository.findById(pid).get());
+		//Long pid = ticket.getPassenger_id();
+	//	bookedTicket.setPassenger(passengerRepository.findById(pid).get());
 		Passenger passenger = bookedTicket.getPassenger();
 
 //		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);

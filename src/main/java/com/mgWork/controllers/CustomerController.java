@@ -63,7 +63,7 @@ public class CustomerController {
 
 		final UserDetails details = customUserDetailsService.loadUserByUsername(authModel.getName());
 		final String token = jwtTokenUtil.generateToken(details);
-		System.out.println("-----------"+details);
+//		System.out.println("-----------"+details);
 		return new ResponseEntity<Jwtresponse>(new Jwtresponse(token), HttpStatus.OK);
 	}
 	private void authenticate(String name, String password) throws Exception {

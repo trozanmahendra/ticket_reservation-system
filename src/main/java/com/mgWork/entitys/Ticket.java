@@ -2,15 +2,21 @@ package com.mgWork.entitys;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -36,7 +42,9 @@ public class Ticket implements Serializable {
 	@Column(unique = true, updatable = false)
 	private String tktId;
 
-	private Long passenger_id;
+	@ManyToMany(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "psngr_ids")
+	private List<Passenger> passengers;
 
 	private Long customerId;
 
@@ -58,7 +66,7 @@ public class Ticket implements Serializable {
 	private Date UpdatedAt;
 	@Override
 	public String toString() {
-		return "Ticket [tktId=" + tktId + ", passenger_id=" + passenger_id + ", bus_id=" + bus_id + ", pickUp=" + pickUp
+		return "Ticket [tktId=" + tktId + ", passenger_id=" +", bus_id=" + bus_id + ", pickUp=" + pickUp
 				+ ", dropp=" + dropp + "]";
 	}
 
