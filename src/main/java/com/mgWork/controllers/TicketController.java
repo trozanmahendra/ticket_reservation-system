@@ -42,13 +42,13 @@ public class TicketController {
 		return new ResponseEntity<Ticket>(service.saveCancelledTicket(tktId, ticket), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/showbookedticket/{id}")
-	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
-
-		service.showBookedTicket(id);
-
-		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
-	}
+//	@GetMapping("/showbookedticket/{id}")
+//	public ResponseEntity<List<TicketMapper>> showBookedTicket(@PathVariable String id) {
+//
+//		service.showBookedTicket(id);
+//
+//		return new ResponseEntity<List<TicketMapper>>(mapperService.showMappers(), HttpStatus.OK);
+//	}
 
 	@GetMapping("/showtickets")
 	public ResponseEntity<List<Ticket>> showTickets() {

@@ -17,15 +17,15 @@ import lombok.ToString;
 @ToString
 public class BookedTicket implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
-	private Ticket ticket;
-	private Passenger passenger;
-	private Bus bus;
-	private Customer customer;
-
-	public BookedTicket() {
-
-	}
+//	private static final long serialVersionUID = 1L;
+//
+//	private Ticket ticket;
+//	private Passenger passenger;
+//	private Bus bus;
+//	private Customer customer;
+//
+//	public BookedTicket() {
+//
+//	}
 
 }

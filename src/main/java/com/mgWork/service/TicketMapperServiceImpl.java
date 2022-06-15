@@ -9,11 +9,12 @@ import com.mgWork.dto.TicketMapper;
 import com.mgWork.repository.TicketMapperRepository;
 @Service
 public class TicketMapperServiceImpl implements TicketMapperService{
-	@Autowired
-	private TicketMapperRepository ticketMapperRepo;
+//	@Autowired
+//	private TicketMapperRepository ticketMapperRepo;
 
 	@Override
 	public List<TicketMapper> showMappers() {
-		return ticketMapperRepo.findAll();
+//		return ticketMapperRepo.findAll();
+		return null;
 	}
 }

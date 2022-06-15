@@ -10,7 +10,6 @@ public interface TicketService {
 
 	Ticket saveTicket(Ticket ticket);
 	
-	BookedTicket showBookedTicket(String id);
 
 	List<Ticket> showTickets();
 	

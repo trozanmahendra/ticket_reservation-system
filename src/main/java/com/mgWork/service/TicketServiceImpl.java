@@ -41,8 +41,8 @@ public class TicketServiceImpl implements TicketService {
 	private BookedTicket bookedTicket;
 	@Autowired
 	private BusRepository busRepository;
-	@Autowired
-	private TicketMapperRepository ticketMapperRepository;
+//	@Autowired
+//	private TicketMapperRepository ticketMapperRepository;
 	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
@@ -129,39 +129,39 @@ public class TicketServiceImpl implements TicketService {
 			return ticketRepo.save(ticket);
 	}
 
-	@Override
-	public BookedTicket showBookedTicket(String id) {
-
-		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
-		Ticket ticket = bookedTicket.getTicket();
-//System.out.println(ticket.getBus_id());
-		Long bid = ticket.getBus_id();
-		bookedTicket.setBus(busRepository.findById(bid).get());
-		Bus bus = bookedTicket.getBus();
-//System.out.println(ticket.getCustomer_id()+"====================================");
-		Long cid = ticket.getCustId();
-		bookedTicket.setCustomer(customerRepository.findById(cid).get());
-		Customer cust = bookedTicket.getCustomer();
-//System.out.println(ticket.getPassenger_id()+"====================================");
-		//Long pid = ticket.getPassenger_id();
-	//	bookedTicket.setPassenger(passengerRepository.findById(pid).get());
-		Passenger passenger = bookedTicket.getPassenger();
-
-//		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
-		ticketMapperRepository.deleteAll();
-		BeanUtils.copyProperties(bus, mapper);
-		BeanUtils.copyProperties(ticket, mapper);
-		BeanUtils.copyProperties(passenger, mapper);
-		BeanUtils.copyProperties(cust, mapper);
-		ticketMapperRepository.save(mapper);
-
-		Customer customer = customerService.getLoggedInCustomer();
-		if (customer.getId() == cust.getId())
-			return bookedTicket;
-		else
-			throw new RuntimeException("Invalid Ticket id " + ticket.getTktId());
-
-	}
+//	@Override
+//	public BookedTicket showBookedTicket(String id) {
+//
+//		bookedTicket.setTicket(ticketRepo.findByTktId(id).get());
+//		Ticket ticket = bookedTicket.getTicket();
+////System.out.println(ticket.getBus_id());
+//		Long bid = ticket.getBus_id();
+//		bookedTicket.setBus(busRepository.findById(bid).get());
+//		Bus bus = bookedTicket.getBus();
+////System.out.println(ticket.getCustomer_id()+"====================================");
+//		Long cid = ticket.getCustId();
+//		bookedTicket.setCustomer(customerRepository.findById(cid).get());
+//		Customer cust = bookedTicket.getCustomer();
+////System.out.println(ticket.getPassenger_id()+"====================================");
+//		//Long pid = ticket.getPassenger_id();
+//	//	bookedTicket.setPassenger(passengerRepository.findById(pid).get());
+//		Passenger passenger = bookedTicket.getPassenger();
+//
+////		System.out.println("\n\n" + bus + "\n" + ticket + "\n" + passenger + "\n" + cust);
+//		ticketMapperRepository.deleteAll();
+//		BeanUtils.copyProperties(bus, mapper);
+//		BeanUtils.copyProperties(ticket, mapper);
+//		BeanUtils.copyProperties(passenger, mapper);
+//		BeanUtils.copyProperties(cust, mapper);
+//		ticketMapperRepository.save(mapper);
+//
+//		Customer customer = customerService.getLoggedInCustomer();
+//		if (customer.getId() == cust.getId())
+//			return bookedTicket;
+//		else
+//			throw new RuntimeException("Invalid Ticket id " + ticket.getTktId());
+//
+//	}
 
 	@Override
 	public List<Ticket> showTickets() {
