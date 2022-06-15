@@ -41,17 +41,6 @@ public class AdminController {
 	public ResponseEntity<Customer> registerAdmin(@RequestBody Customer admin) {
 		return new ResponseEntity<Customer>(adminService.saveAdmin(admin), HttpStatus.CREATED);
 
-//		@PostMapping("/login")
-//		public ResponseEntity<Jwtresponse> login(@RequestBody AuthModel authModel) throws Exception {
-//
-//			authenticate(authModel.getEmail(), authModel.getPassword());
-//
-//			final UserDetails details = customUserDetailsService.loadUserByUsername(authModel.getEmail());
-//			final String token = jwtTokenUtil.generateToken(details);
-//
-//			return new ResponseEntity<Jwtresponse>(new Jwtresponse(token), HttpStatus.OK);
-//		}
-
 	}
 
 	@PostMapping("/login")
