@@ -13,3 +13,7 @@ spring:
     show-sql: true
   main:
     allow-bean-definition-overriding: true
+jwt:
+ secret: mg123
+    
+#   jwt.secret=mg123

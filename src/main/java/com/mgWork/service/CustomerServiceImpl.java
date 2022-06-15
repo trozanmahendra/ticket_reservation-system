@@ -36,5 +36,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepo.findByName(name)
 				.orElseThrow(() -> new RuntimeException("User not found for the name" + name));
 	}
+	
+	@Override
+	public Customer findByName(String name) {
+		
+		return customerRepo.findByName(name).get();
+	}
 
 }

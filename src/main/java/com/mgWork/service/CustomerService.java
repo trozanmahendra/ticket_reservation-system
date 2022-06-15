@@ -9,4 +9,8 @@ public interface CustomerService {
 	Customer getLoggedInCustomer();
 
 	
+
+	Customer findByName(String name);
+
+	
 }
