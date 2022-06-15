@@ -9,9 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,8 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mgWork.dto.AuthModel;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
+import com.mgWork.entitys.Jwtresponse;
+import com.mgWork.security.CustomUserDetailsService;
 import com.mgWork.service.BusService;
 import com.mgWork.service.CustomerService;
+import com.mgWork.util.JwtTokenUtil;
 
 @RestController
 @RequestMapping("/cust")
@@ -34,6 +38,10 @@ public class CustomerController {
 	private AuthenticationManager authenticationManager;
 	@Autowired
 	private BusService busService;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
 	@PostMapping("/register")
 	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) {
@@ -48,14 +56,29 @@ public class CustomerController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> loginCustomer(@RequestBody AuthModel authModel) {
+	public ResponseEntity<Jwtresponse> loginCustomer(@RequestBody AuthModel authModel) throws Exception {
 
-		Authentication authentication = authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(authModel.getName(), authModel.getPassword()));
+		authenticate(authModel.getName(), authModel.getPassword());
+		
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return new ResponseEntity<String>("Welcome " + authModel.getName() + " \n login successful...........",
-				HttpStatus.OK);
+		final UserDetails details = customUserDetailsService.loadUserByUsername(authModel.getName());
+		final String token = jwtTokenUtil.generateToken(details);
+		System.out.println("-----------"+details);
+		return new ResponseEntity<Jwtresponse>(new Jwtresponse(token), HttpStatus.OK);
 	}
+	private void authenticate(String name, String password) throws Exception {
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(name, password));
+
+		} catch (DisabledException e) {
+
+			throw new Exception("User disabled");
+		} catch (BadCredentialsException e) {
+			throw new Exception("bad credentals");
+		}
+		
+	}
+	
+
 
 }

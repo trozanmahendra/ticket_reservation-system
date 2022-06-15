@@ -33,12 +33,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String username = null;
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
-			System.out.println("-------jwtToken--------"+jwtToken+"---------------------");
+//			System.out.println("-------jwtToken--------"+jwtToken+"---------------------");
 
 			try {
-				System.out.println("---------------"+jwtTokenUtil+"---------------------");
+//				System.out.println("---------------"+jwtTokenUtil+"---------------------");
 				username = jwtTokenUtil.getUserNameFromToken(jwtToken);
-				System.out.println("------username---------"+username+"---------------------");
+//				System.out.println("------username---------"+username+"---------------------");
 			} catch (IllegalArgumentException e) {
 				throw new RuntimeException("Unable to get JWT token");
 
@@ -46,7 +46,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				throw new RuntimeException("Expired JWT token");
 			}
 		}
-		System.out.println( SecurityContextHolder.getContext() == null);
 		
 //		After getting the token we need to validate it
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -66,5 +65,3 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	}
 
 }
-//8897486544
-//7993742502
