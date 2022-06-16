@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.dto.AuthModel;
+import com.mgWork.dto.CustomerDto;
 import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Jwtresponse;
@@ -44,8 +45,8 @@ public class CustomerController {
 	private CustomUserDetailsService customUserDetailsService;
 
 	@PostMapping("/register")
-	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) {
-		return new ResponseEntity<Customer>(customerService.saveCustomer(customer), HttpStatus.CREATED);
+	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody CustomerDto customerdto) {
+		return new ResponseEntity<Customer>(customerService.saveCustomer(customerdto), HttpStatus.CREATED);
 
 	}
 	@GetMapping("/searchroutes")

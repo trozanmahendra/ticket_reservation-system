@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mgWork.dto.AuthModel;
+import com.mgWork.dto.CustomerDto;
 import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Jwtresponse;
 import com.mgWork.security.CustomUserDetailsService;
@@ -36,7 +37,7 @@ public class AdminController {
 	private JwtTokenUtil jwtTokenUtil;
 
 	@PostMapping("/register")
-	public ResponseEntity<Customer> registerAdmin(@RequestBody Customer admin) {
+	public ResponseEntity<Customer> registerAdmin(@RequestBody CustomerDto admin) {
 		return new ResponseEntity<Customer>(adminService.saveAdmin(admin), HttpStatus.CREATED);
 
 	}

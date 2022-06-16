@@ -1,11 +1,13 @@
 package com.mgWork.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mgWork.dto.CustomerDto;
 import com.mgWork.entitys.Customer;
 import com.mgWork.repository.AuthorityRepository;
 import com.mgWork.repository.CustomerRepository;
@@ -21,7 +23,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private AuthorityRepository authorityRepository;
 	@Override
-	public Customer saveCustomer(Customer customer) {
+	public Customer saveCustomer(CustomerDto customerDto) {
+		Customer customer = new Customer();
+		BeanUtils.copyProperties(customerDto, customer);
 		customer.setPassword(encoder.encode(customer.getPassword()));
 		customer.setAuthority(authorityRepository.findById((long) 2).get());
 		return customerRepo.save(customer);

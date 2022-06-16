@@ -13,6 +13,8 @@ import javax.validation.constraints.Future;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +29,7 @@ public class Bus implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long bus_id;
 
 	@Column(nullable = false)
@@ -38,11 +41,10 @@ public class Bus implements Serializable {
 	private String bus_type;
 	private int seats;
 
+//	@JsonIgnore
 	private int seatsAvailable;
 	private String origin;
-//	private String pickup_point;
 	private String destination;
-//	private String drop_point;
 	private float tkt_fare;
 
 	@Future(message = "start_date must be a future date only")
@@ -51,8 +53,10 @@ public class Bus implements Serializable {
 	private Date end_date;
 
 	@CreationTimestamp
+	@JsonIgnore
 	@Column(nullable = false, updatable = false)
 	private Date createdAt;
+	@JsonIgnore
 	@UpdateTimestamp
 	private Date UpdatedAt;
 

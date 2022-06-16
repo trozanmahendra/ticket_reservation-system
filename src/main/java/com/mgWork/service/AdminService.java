@@ -1,5 +1,6 @@
 package com.mgWork.service;
 
+import com.mgWork.dto.CustomerDto;
 import com.mgWork.entitys.Customer;
 
 public interface AdminService {
@@ -10,5 +11,7 @@ public interface AdminService {
 
 	public Customer getLoggedInAdmin();
 
-	Customer saveAdmin(Customer admin);
+//	Customer saveAdmin(Customer admin);
+
+	Customer saveAdmin(CustomerDto admindto);
 }
