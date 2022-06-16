@@ -48,7 +48,7 @@ public class Ticket implements Serializable {
 	@OneToOne(fetch = FetchType.EAGER)
 	private Customer customer;
 
-	private Long bus_id;
+	private String bus_reg_id;
 	@OneToOne(fetch = FetchType.EAGER)
 	private Bus bus;
 	@Column(nullable = false)

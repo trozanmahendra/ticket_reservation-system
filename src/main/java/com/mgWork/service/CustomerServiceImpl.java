@@ -25,6 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer saveCustomer(CustomerDto customerDto) {
 		Customer customer = new Customer();
+		System.out.println(customerDto);
 		BeanUtils.copyProperties(customerDto, customer);
 		customer.setPassword(encoder.encode(customer.getPassword()));
 		customer.setAuthority(authorityRepository.findById((long) 2).get());

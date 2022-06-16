@@ -61,7 +61,7 @@ public class Customer implements Serializable {
 	private Date UpdatedAt;
 	@OneToOne
 	@JoinColumn(name = "authority_id")
-//	@JsonIgnore
+	@JsonIgnore
 	private Authority authority;
 
 	@Override

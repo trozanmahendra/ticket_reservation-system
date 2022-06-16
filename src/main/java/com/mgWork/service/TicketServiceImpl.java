@@ -52,7 +52,7 @@ public class TicketServiceImpl implements TicketService {
 		ticket.setCustId(customer.getId());
 		ticket.setCustomer(customerRepository.findById(customer.getId()).get());
 
-		Bus bus = busRepository.findById(ticket.getBus_id()).get();
+		Bus bus = busRepository.findByRegId(ticket.getBus_reg_id()).get();
 		ticket.setBus(bus);
 
 		String origin = bus.getOrigin();
@@ -96,7 +96,7 @@ public class TicketServiceImpl implements TicketService {
 	public Ticket saveCancelledTicket(String tktId, Ticket ticket) throws ParseException {
 		ticket = ticketRepo.findByTktId(tktId).get();
 		ticket.setStatus("cancelled");
-		Bus bus = busRepository.findById(ticket.getBus_id()).get();
+		Bus bus = busRepository.findByRegId(ticket.getBus_reg_id()).get();
 		int seatsAvail = bus.getSeatsAvailable();
 		bus.setSeatsAvailable(seatsAvail + ticket.getPassengers().size());
 		busRepository.save(bus);
@@ -124,7 +124,7 @@ public class TicketServiceImpl implements TicketService {
 
 		for (int i = 0; i < tickets.size(); i++) {
 			boolean b1 = tickets.get(i).getStatus().equalsIgnoreCase("active");
-			Bus bus = busRepository.findById(tickets.get(i).getBus_id()).get();
+			Bus bus = busRepository.findByRegId(tickets.get(i).getBus_reg_id()).get();
 			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
