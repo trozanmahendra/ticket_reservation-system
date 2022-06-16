@@ -57,8 +57,8 @@ public class TicketReservationSystemApplication {
 			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			System.out.println("-------*****" + secondDate.getTime() + "========" + firstDate.getTime() + "=====" + diff
-					+ "---------------");
+//			System.out.println("-------*****" + secondDate.getTime() + "========" + firstDate.getTime() + "=====" + diff
+//					+ "---------------");
 			if (diff <= 0 && isActive) {
 				System.out.println("ticketHourlyStatusUpdate invoked");
 				tickets.get(i).setStatus("expired");
@@ -71,7 +71,7 @@ public class TicketReservationSystemApplication {
 		}
 	}
 
-	@Scheduled(fixedDelay = 60 * 60 * 1000l)
+	@Scheduled(fixedDelay =  60 * 60 * 1000l)
 	public void busDateUpdations() {
 		List<Bus> buses = busRepository.findAll();
 		Date firstDate = null;
@@ -83,9 +83,10 @@ public class TicketReservationSystemApplication {
 			firstDate = bus.getEnd_date();
 			long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
 			long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+//			System.out.println("---------"+diff);
 			if (diff <= 0) {
 				System.out.println("Buses dates updated for today :" + date);
-				bus.setStart_date(new Date(secondDate.getTime() + (1000 * 60 * 60 * 24)));
+				bus.setStart_date(new Date(firstDate.getTime() + (1000 * 60 * 60 * 24)));
 				bus.setEnd_date(new Date(firstDate.getTime() + (1000 * 60 * 60 * 24) + (1000 * 60 * 60 * 6)));
 				busRepository.save(bus);
 			}
