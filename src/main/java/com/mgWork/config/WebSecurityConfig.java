@@ -33,14 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 			http.csrf().disable().authorizeRequests()
-				.antMatchers("/admin/register", "/admin/login", "/", "/cust/register", "/cust/login").permitAll()
+				.antMatchers("/admin/register", "/admin/login", "/", "/cust/register", "/cust/login","/cust/searchroutes").permitAll()
 				.mvcMatchers("/admin/**").hasAuthority("ADMIN")
 				.antMatchers("/cust/**").hasAnyAuthority("ADMIN", "USER")
 //			    .anyRequest().authenticated()
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(authenticationJwtFilter(), UsernamePasswordAuthenticationFilter.class);
-
-		http.httpBasic();
+				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().addFilterBefore(authenticationJwtFilter(), UsernamePasswordAuthenticationFilter.class);
+			http.httpBasic();
 	}
 
 	@Override

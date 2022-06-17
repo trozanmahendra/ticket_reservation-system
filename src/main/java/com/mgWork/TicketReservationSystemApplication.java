@@ -1,6 +1,5 @@
 package com.mgWork;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import com.mgWork.entitys.Bus;
-import com.mgWork.entitys.Customer;
 import com.mgWork.entitys.Ticket;
 import com.mgWork.repository.BusRepository;
 import com.mgWork.repository.TicketRepository;
@@ -65,7 +63,8 @@ public class TicketReservationSystemApplication {
 				ticketRepo.save(tickets.get(i));
 
 			}
-			if (diff <= 0 || iscancelled)
+//			while explaining makr diff=0
+			if (diff <= 7 || iscancelled)
 				System.out.println("deleted tickets which are expired and cancelled older than 7 days");
 			ticketRepo.delete(tickets.get(i));
 		}
@@ -88,6 +87,7 @@ public class TicketReservationSystemApplication {
 				System.out.println("Buses dates updated for today :" + date);
 				bus.setStart_date(new Date(firstDate.getTime() + (1000 * 60 * 60 * 24)));
 				bus.setEnd_date(new Date(firstDate.getTime() + (1000 * 60 * 60 * 24) + (1000 * 60 * 60 * 6)));
+				bus.setSeatsAvailable(bus.getSeats());
 				busRepository.save(bus);
 			}
 

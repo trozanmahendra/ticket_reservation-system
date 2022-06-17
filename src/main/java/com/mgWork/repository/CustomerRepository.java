@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.mgWork.entitys.Bus;
 import com.mgWork.entitys.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
